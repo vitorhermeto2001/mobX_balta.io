@@ -17,12 +17,13 @@ class SignupView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Cadastri-se",
+                  "CADASTRO",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     color: Colors.blue,
                   ),
                 ),
+                // fild para o nome
                 TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -36,6 +37,47 @@ class SignupView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Nome Inválido';
+                    }
+                    return null;
+                  },
+                  onSaved: (val) {},
+                ),
+                // fild para o email
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: "E-mail",
+                    labelStyle: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'E-mail Inválido';
+                    }
+                    if (value.contains('@') == false) {
+                      return 'E-mail Inválido';
+                    }
+                    return null;
+                  },
+                  onSaved: (val) {},
+                ),
+                // fild para a senha
+                TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    labelText: "Senha",
+                    labelStyle: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Senha Inválida';
                     }
                     return null;
                   },
