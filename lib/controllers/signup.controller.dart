@@ -1,15 +1,16 @@
 import 'package:mobx_basltaio/models/user.model.dart';
+import 'package:mobx_basltaio/repositories/account.repository.dart';
+import 'package:mobx_basltaio/view-model/signup.viewmodel.dart';
 
 class SignupController {
-  Future<UserModel> create() async {
-    await Future.delayed(new Duration(milliseconds: 1500));
-    return new UserModel(
-      id: "1",
-      name: 'vitor hermeto',
-      email: "https://picsum.photos/200/200",
-      picture: "",
-      role: "studant",
-      token: "xpto",
-    );
+  late AccountRepository repository;
+
+  SignupController() {
+    repository = new AccountRepository();
+  }
+
+  Future<UserModel> create(SignupViewModel model) async {
+    var user = await repository.createAccount(model);
+    return user;
   }
 }

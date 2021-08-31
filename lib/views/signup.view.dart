@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobx_basltaio/controllers/signup.controller.dart';
+import 'package:mobx_basltaio/view-model/signup.viewmodel.dart';
 
 class SignupView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final _controller = new SignupController();
+  var model = new SignupViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,9 @@ class SignupView extends StatelessWidget {
                     }
                     return null;
                   },
-                  onSaved: (val) {},
+                  onSaved: (val) {
+                    model.name = val!;
+                  },
                 ),
                 // fild para o email
                 TextFormField(
@@ -62,11 +68,14 @@ class SignupView extends StatelessWidget {
                     }
                     return null;
                   },
-                  onSaved: (val) {},
+                  onSaved: (val) {
+                    model.email = val!;
+                  },
                 ),
                 // fild para a senha
                 TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: "Senha",
                     labelStyle: TextStyle(
@@ -81,7 +90,9 @@ class SignupView extends StatelessWidget {
                     }
                     return null;
                   },
-                  onSaved: (val) {},
+                  onSaved: (val) {
+                    model.password = val!;
+                  },
                 ),
                 SizedBox(
                   height: 40,
@@ -91,6 +102,10 @@ class SignupView extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                     }
+
+                    _controller.create(model).then((data) {
+                      print(data.token);
+                    });
                   },
                   child: Text(
                     "Cadastrar",
