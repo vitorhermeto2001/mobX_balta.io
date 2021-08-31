@@ -3,9 +3,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx_basltaio/controllers/signup.controller.dart';
 import 'package:mobx_basltaio/view-model/signup.viewmodel.dart';
 
-class SignupView extends StatelessWidget {
+import 'home.view.dart';
+
+class SignupView extends StatefulWidget {
+  @override
+  _SignupViewState createState() => _SignupViewState();
+}
+
+class _SignupViewState extends State<SignupView> {
   final _formKey = GlobalKey<FormState>();
+
   final _controller = new SignupController();
+
   var model = new SignupViewModel();
 
   @override
@@ -104,26 +113,39 @@ class SignupView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    : Observer(builder: (_) {
-                        return TextButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                            }
-                            model.busy = true;
-                            _controller.create(model);
-                            model.busy = false;
-                          },
-                          child: Text(
-                            "Cadastrar",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
-                          ),
-                        );
-                      })
+                    : TextButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                          }
+                          setState(
+                            () {
+                              _controller.create(model).then(
+                                (data) {
+                                  setState(
+                                    () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomeView(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          "Cadastrar",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                      ),
               ],
             ),
           ),
