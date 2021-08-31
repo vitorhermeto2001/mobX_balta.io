@@ -1,7 +1,8 @@
 import 'package:mobx_basltaio/models/user.model.dart';
+import 'package:mobx_basltaio/view-model/signup.viewmodel.dart';
 
 class AccountRepository {
-  Future<UserModel> createAccount() async {
+  Future<UserModel> createAccount(SignupViewModel model) async {
     await Future.delayed(new Duration(milliseconds: 1500));
     return new UserModel(
       id: "1",
