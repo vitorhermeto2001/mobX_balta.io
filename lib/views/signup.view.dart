@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx_basltaio/controllers/signup.controller.dart';
 import 'package:mobx_basltaio/view-model/signup.viewmodel.dart';
 
@@ -97,25 +98,32 @@ class SignupView extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
-                TextButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                    }
-
-                    _controller.create(model).then((data) {
-                      print(data.token);
-                    });
-                  },
-                  child: Text(
-                    "Cadastrar",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                )
+                model.busy
+                    ? Center(
+                        child: Container(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Observer(builder: (_) {
+                        return TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                            }
+                            model.busy = true;
+                            _controller.create(model);
+                            model.busy = false;
+                          },
+                          child: Text(
+                            "Cadastrar",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                        );
+                      })
               ],
             ),
           ),
