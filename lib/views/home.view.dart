@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mobx_basltaio/stores/app.store.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<AppStore>(context);
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Text("Hello from home"),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              Image.network(store.picture),
+              Text(store.name),
+              Text(store.email),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -7,8 +7,8 @@ class AccountRepository {
     return new UserModel(
       id: "1",
       name: 'vitor hermeto',
-      email: "https://picsum.photos/200/200",
-      picture: "",
+      email: "vitorhermeto@hotmail.com",
+      picture: "https://picsum.photos/200/200",
       role: "studant",
       token: "xpto",
     );
